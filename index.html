@@ -184,7 +184,7 @@
                 </button>
             )
         }
-        const TimerV2 = (props) => {
+        const TimerVersion2 = (props) => {
             return (
                 <h1>
                     {props.text}
@@ -213,7 +213,7 @@
             render(){
                 return (
                     <div>
-                        <TimerV2 text={this.state.time} />
+                        <TimerVersion2 text={this.state.time} />
                         <button onClick={() => {
                                 console.log("HER")
                             }}>Starts</button>
@@ -224,7 +224,8 @@
         }
         Date.prototype.getDoubleMinutes = function(){
             let minutes = this.getMinutes();
-            if (10 > minutes){
+            if (10 > minutes) 
+            {
                 minutes = "0" + minutes;
             }
             
