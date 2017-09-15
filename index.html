@@ -13,8 +13,13 @@
             font-size: 18px;
         }
         
-        h1 {
+        h1, h2 {
             text-align: center;
+        }
+        
+        .watch-button {
+            padding: 10px;
+            color: red;
         }
     </style>
 </head>
@@ -26,10 +31,7 @@
 
     <!-- JavaScript -->
     <script type="text/babel">
-
-
         
-
         // --------------------------------
         // Simple Component 
         
@@ -38,11 +40,11 @@
         // that contains values used to configure the component. 
       
         // --------------------------------
-        const Title = (props) => {
-            return (
-                <h1>{props.title}</h1>
-            );
-        }
+//        const Title = (props) => {
+//            return (
+//                <h1>{props.title}</h1>
+//            );
+//        }
         // --------------------------------
         
         
@@ -73,7 +75,161 @@
         // as title this causes the Title component to render and it receives
         // props.title which it displays. 
         
+//        Pass the title string and subtitle string into the component as props.
+//Use this new component to display:
+//title: "React Timer"
+//subtitle: "Counts in seconds"
+//Bonus: How many components did you make? Title and Subtitle can each be a component. 
+// 3 components that are made With Heading 
+//being a component that contains both Title and Subtitle.
+//Bonus: add some CSS to style the title and subtitle in the new component.
+//Hint: Assign class names to JSX with className="my-class" instead of class="my-class"
+
         // --------------------------------
+        class Header extends React.Component{
+            constructor(props) {
+                super(props);
+            }
+            
+            render(){
+                return (
+                    <div>
+                        <Title text={this.props.title} />
+                        <SubTitle text={this.props.subtitle}/>
+                    </div>
+                )
+            }
+        }
+        class Title extends React.Component{
+            constructor(props) {
+                super(props);
+            }
+            
+            render(){
+                return (
+                    <h1>
+                        {this.props.text}
+                    </h1>
+                )
+            }
+        }
+        class SubTitle extends React.Component{
+            constructor(props) {
+                super(props);
+            }
+            
+            render(){
+                return (
+                    <h2>
+                        {this.props.text}
+                    </h2>
+                )
+            }
+        }
+        class Timer extends React.Component{
+            constructor(props) {
+                super(props);
+                
+                let count = 10;
+                if (typeof props.count != "undefined"){
+                    count = props.count;
+                }
+                
+                let running = true;
+                if (typeof props.isRunning != "undefined"){
+                    running = props.isRunning;
+                }
+                this.state = {
+                    count: count,
+                    isRunning: running
+                }
+                
+                if(running){
+                    this.timerId = setInterval(() => this.tick(), 1000);
+                }
+            }
+            
+            componentWillUnmount() {
+                clearInterval(this.timerId);
+            }
+            // implement the tick() 
+            tick(){
+                if(!this.state.isRunning){
+                    clearInterval(this.timerId);
+                    return;
+                }
+                
+                if(this.state.count < 1){
+                    this.setState({isRunning: false});
+                    clearInterval(this.timerId);
+                    
+                    return;
+                }
+                
+                this.setState({count: this.state.count - 1});
+            }
+            
+            render(){
+                return (
+                    <h1>
+                        {this.state.count}
+                    </h1>
+                )
+            }
+        }
+        const WatchButton = (props) => {
+            return (
+                <button className="watch-button">
+                    {props.text}
+                </button>
+            )
+        }
+        const TimerV2 = (props) => {
+            return (
+                <h1>
+                    {props.text}
+                </h1>
+            )
+        }
+        
+        class StopWatch extends React.Component {
+            constructor(props){
+                super(props)
+                
+                
+                
+                this.state = {
+                    time: 50,
+                    label: "Off",
+                    isRunning: false
+                }
+            }
+            
+            onClickA(){
+                console.log("Click!!!");
+                this.setState({time: 5})
+            }
+            
+            render(){
+                return (
+                    <div>
+                        <TimerV2 text={this.state.time} />
+                        <button onClick={() => {
+                                console.log("HER")
+                            }}>Starts</button>
+                        <WatchButton text="Stop" />
+                    </div>
+                )
+            }
+        }
+        Date.prototype.getDoubleMinutes = function(){
+            let minutes = this.getMinutes();
+            if (10 > minutes){
+                minutes = "0" + minutes;
+            }
+            
+            return minutes;
+        };
         class Clock extends React.Component {
             constructor(props) {
                 super(props);
@@ -95,25 +251,23 @@
             render() {
                 const date = this.state.date;
                 const h = date.getHours();
-                const m = date.getMinutes();
-                const s = date.getSeconds();
+                const m = date.getDoubleMinutes();
+                let s = date.getSeconds();
+                
+                if(10 > s){
+                    s = "0" + s
+                }
+                
                 const displayTime = `${h}:${m}:${s}`;
                 return (
-                    <Title title={displayTime} />
+                    <Title text={displayTime} />
                 );
             }
         }
         // -------------------------------- 
-
-
-
-
-
-
         // --------------------------------
         // List 
         // --------------------------------
-
         // This component will display a list of items provided by an array
         // on props. Best practice, transform the array into an array of JSX!
         // React will render the entire list if given an array of JSX items. 
@@ -135,24 +289,20 @@
         
         // These things will be displayed in the list. 
         const things = ["A", "B", "C"];
-      
   
-
-
-
         
         // -------------------------------- 
         // Renders reacts virtual DOM. 
         // --------------------------------
-
         // This handles displaying the React stuff in the browser. 
         // Each of the react components is rendered as standard HTML
         // at this stage. 
-        
         ReactDOM.render(
             <div>
-                <Title title="Simple React Starter" />
+                <Header title="React Timer" subtitle="Counts in seconds"/>
                 <Clock />
+                <Timer count="10" />
+                <StopWatch />
                 <List items={things} />
             </div>, 
             document.getElementById('app')
