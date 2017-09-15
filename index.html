@@ -199,16 +199,19 @@
                 
                 
                 this.state = {
-                    time: 50,
+                    time: 60,
                     label: "Off",
                     isRunning: false
                 }
             }
-            
+            // Make a new component that is a Stopwatch. The Stopwatch is a Timer with a stop/start button.
+
             onClickA(){
                 console.log("Click!!!");
                 this.setState({time: 5})
             }
+
+            //The Stopwatch should count like the Timer but you should be able to start and stop it by clicking the button.
             
             render(){
                 return (
@@ -232,7 +235,8 @@
             return minutes;
         };
         class Clock extends React.Component {
-            constructor(props) {
+            constructor(props) 
+            {
                 super(props);
                 this.state = {
                     date: new Date(),
