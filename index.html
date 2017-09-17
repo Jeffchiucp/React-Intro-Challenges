@@ -20,6 +20,8 @@
         .watch-button {
             padding: 10px;
             color: red;
+/*                              color="#841584"
+*/
         }
     </style>
 </head>
@@ -46,8 +48,6 @@
 //            );
 //        }
         // --------------------------------
-        
-        
         
         
         
@@ -113,6 +113,7 @@
                 )
             }
         }
+
         class SubTitle extends React.Component{
             constructor(props) {
                 super(props);
@@ -126,6 +127,7 @@
                 )
             }
         }
+
         class Timer extends React.Component{
             constructor(props) {
                 super(props);
@@ -153,6 +155,7 @@
                 clearInterval(this.timerId);
             }
             // implement the tick() 
+
             tick(){
                 if(!this.state.isRunning){
                     clearInterval(this.timerId);
@@ -184,6 +187,7 @@
                 </button>
             )
         }
+        // TimerVersion2
         const TimerVersion2 = (props) => {
             return (
                 <h1>
@@ -192,6 +196,10 @@
             )
         }
         
+        // implement the stopwatch with the following instruction
+            // Make a new component that is a Stopwatch. The Stopwatch is a Timer with a stop/start button.
+            //The Stopwatch should count like the Timer but you should be able to start and stop it by clicking the button.
+
         class StopWatch extends React.Component {
             constructor(props){
                 super(props)
@@ -204,14 +212,12 @@
                     isRunning: false
                 }
             }
-            // Make a new component that is a Stopwatch. The Stopwatch is a Timer with a stop/start button.
 
             onClickA(){
                 console.log("Click!!!");
                 this.setState({time: 5})
             }
 
-            //The Stopwatch should count like the Timer but you should be able to start and stop it by clicking the button.
             
             render(){
                 return (
@@ -234,6 +240,7 @@
             
             return minutes;
         };
+
         class Clock extends React.Component {
             constructor(props) 
             {
